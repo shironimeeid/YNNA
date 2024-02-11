@@ -47,7 +47,7 @@ body, html {
 
 /* Dark Theme */
 [data-theme="dark"] .navbar {
-  background-color: #222; /* Warna latar belakang navbar di mode gelap */
+  background-color: #22222200; /* Warna latar belakang navbar di mode gelap */
   color: #ddd; /* Warna teks di navbar di mode gelap */
 }
 
@@ -69,7 +69,7 @@ body, html {
 }
 
 .navbar a:hover {
-  background-color: #ff00ff00
+  background-color: #ffffff00
 }
 
 .navbar button {
@@ -85,7 +85,7 @@ body, html {
 }
 
 .navbar button:hover {
-  background-color: #000000;
+  background-color: rgba(255, 0, 234, 0)
 }
 
 .container {
@@ -171,7 +171,7 @@ body, html {
 }
 
 .dark-theme .navbar a:hover, .dark-theme .navbar button:hover {
-  background-color: #000000;
+  background-color: #ff19c5;
 }
 body {
   transition: background-color 0.5s ease, color 0.5s ease;
