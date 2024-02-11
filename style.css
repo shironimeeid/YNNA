@@ -1,0 +1,163 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+.result-container {
+    text-align: left; /* Mengatur posisi teks kiri kanan */
+}
+
+.navbar {
+    background-color: #333;
+    overflow: hidden;
+    width: 100%;
+}
+
+.navbar a {
+    float: left;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+    transition: background 0.3s ease;
+}
+
+.navbar a:hover {
+    background-color: #555;
+}
+
+.navbar button {
+    float: right;
+    display: block;
+    border: none;
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 14px 20px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.navbar button:hover {
+    background-color: #555;
+}
+
+.container {
+    padding: 20px;
+    text-align: center;
+}
+
+#search-container {
+    margin: 20px 0;
+}
+
+#search-input {
+    padding: 10px;
+    margin-right: 5px;
+    width: 300px;
+    border: 1px solid #ccc;
+}
+
+#search-button {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#search-button:hover {
+    background-color: #0056b3;
+}
+
+#events-container {
+    margin-top: 20px;
+}
+
+
+.event {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    background-image: url('/file/YNNA.jpg');
+    background-size: cover; /* Menyesuaikan ukuran gambar */
+    background-position: center; /* Posisi gambar di tengah kotak event */
+    background-repeat: no-repeat; /* Menghindari pengulangan gambar */
+    padding: 15px;
+    margin-bottom: 20px;
+    color: #ffffff; /* Warna teks default */
+    font-weight: bold; /* Membuat teks menjadi tebal */
+    border-radius: 5px; /* Menggunakan border-radius untuk membuat sudut kotak menjadi melengkung */
+}
+
+.light-theme .event {
+    background-image: url('/file/YNNA.jpg'); /* Gunakan gambar yang sama di mode terang */
+    background-color: rgba(255, 255, 255, 0.8); /* Warna latar belakang dengan opasitas rendah */
+    border-color: #ddd;
+    color: #000000; /* Warna teks di mode terang */
+    font-weight: bold; /* Membuat teks menjadi tebal */
+}
+
+.dark-theme .event {
+    background-image: url('/file/YNNA.jpg');
+    background-color: rgba(0, 0, 0, 0.6);
+    border-color: #555;
+    color: #fff;
+    font-weight: bold;
+    box-shadow: 0 0 10px rgb(255, 0, 200); /* Efek glow dengan warna pink */
+}
+
+.dark-theme {
+    background-color: #333;
+    color: #fff;
+}
+
+.dark-theme .navbar {
+    background-color: #222;
+}
+
+.dark-theme .event {
+    background-color: #424242;
+    border-color: #555;
+}
+
+.dark-theme .navbar a, .dark-theme .navbar button {
+    color: #ddd;
+}
+
+.dark-theme .navbar a:hover, .dark-theme .navbar button:hover {
+    background-color: #555;
+}
+body {
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+/* Tambahkan properti CSS untuk membuat kotak notifikasi */
+#popupAlert {
+    display: none;
+    animation: fadeIn 1s forwards;
+    /* Tambahkan properti CSS untuk kotak notifikasi */
+    background-color: #f8d7da; /* Warna latar belakang */
+    border: 1px solid #f5c6cb; /* Warna border */
+    color: #721c24; /* Warna teks */
+    padding: 10px 20px; /* Padding */
+    border-radius: 5px; /* Border radius */
+    margin: 20px; /* Jarak antara kotak notifikasi dengan elemen lain */
+}
+
+.fade-out {
+    animation: fadeOut 1s forwards;
+}
+
+

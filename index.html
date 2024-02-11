@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halaman Utama ShiroAnime</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="/file/logo.jpg" type="image/jpg">
+</head>
+<body>
+    <div class="navbar">
+        <a href="#home" id="redirectToHome">Home</a>
+        <a href="https://df18076b-0b43-43af-905e-48cf1842cc85-00-2rfhu0zixp4ke.worf.replit.dev/" id="redirectToDjango">Anime</a>
+        <a href="https://www.instagram.com/ynna.community/" id="redirectToInstagram">Instagram</a>
+        <button id="toggleTheme">Ganti Tema</button>
+    </div>
+    <div class="container">
+        <h1>Selamat Datang di Server ShiroNime</h1>
+        <p>ini adalah pencarian jadwal event Real Time di buat dengan</p>
+        <div id="datetime"></div>
+        <div id="search-container">
+            <input type="text" id="search-input" placeholder="Cari event atau lokasi...">
+            <button id="search-button">Cari</button>
+        </div>
+        <div id="events-container" class="events-container"></div>
+        <audio id="animeSound" src="file/anime.mp3"></audio>
+    </div>
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
+
+</body>
+</html>
+
