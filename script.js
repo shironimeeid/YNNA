@@ -1956,13 +1956,14 @@ document.addEventListener("DOMContentLoaded", function() {
         const today = new Date();
         return today.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'Asia/Jakarta' }).replace(/ /g, ' ');
     }
+
     function updateTime() {
         const now = new Date();
         const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); // Format waktu: HH:MM
         const dateString = now.toLocaleDateString('id-ID', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric', timeZone: 'Asia/Jakarta'  }); // Format tanggal: Senin, 01 Januari 2023
         document.getElementById('datetime').innerHTML = `Event Pada ${timeString} - ${dateString}`; // Menampilkan waktu dan tanggal
     }
-    
+
     // Panggil updateTime setiap detik untuk memperbarui waktu secara real-time
     setInterval(updateTime, 1000);
 
@@ -2002,6 +2003,9 @@ document.addEventListener("DOMContentLoaded", function() {
     };
 
     const fuse = new Fuse(events, fuseOptions);
+
+    const navbar = document.getElementById('navbar');
+
 
     function searchEvents(query) {
         const lowerCaseQuery = query.toLowerCase();
@@ -2070,8 +2074,21 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Event listener untuk tombol "toggleTheme"
     document.getElementById('toggleTheme').addEventListener('click', () => {
-        document.body.classList.toggle('dark-theme');
-
-        
+        const body = document.body;
+        if (body.classList.contains('dark-theme')) {
+            body.classList.remove('dark-theme');
+            localStorage.setItem('theme', 'light');
+        } else {
+            body.classList.add('dark-theme');
+            localStorage.setItem('theme', 'dark');
+        }
     });
+
+    // Set tema berdasarkan preferensi yang disimpan di localStorage saat halaman dimuat
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        document.body.classList.add('dark-theme');
+    } else {
+        document.body.classList.remove('dark-theme');
+    }
 });
