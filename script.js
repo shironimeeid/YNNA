@@ -1820,7 +1820,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
 
         if (events.length === 0) {
-            eventsContainer.innerHTML = '<p>Coming Soon Event...</p>';
+            eventsContainer.innerHTML = '<p>Event coming soon...</p>';
         }
     }
 
