@@ -1820,7 +1820,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
 
         if (events.length === 0) {
-            eventsContainer.innerHTML = '<p>Event yang kamu cari tidak ada.</p>';
+            eventsContainer.innerHTML = '<p>Tidak ada event yang tersedia.</p>';
         }
     }
 
