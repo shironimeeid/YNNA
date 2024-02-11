@@ -31,18 +31,124 @@
     </div>
     <div class="container mt-5">
         <h1 class="display-4">Selamat Datang di YNNA</h1>
-        <p class="lead">ini adalah pencarian jadwal event Real Time</p>
+        <p class="lead">Ini adalah pencarian jadwal event Real Time di buat dengan Express Django</p>
         <div id="datetime"></div>
         <div id="search-container" class="input-group mb-3">
             <input type="text" id="search-input" class="form-control" placeholder="Cari event atau lokasi...">
-            <button id="search-button" class="btn btn-outline-pink" type="button">Cari</button>
         </div>
         <div id="events-container" class="events-container"></div>
         <audio id="animeSound" src="file/anime.mp3"></audio>
     </div>
     <!-- Tautan ke Bootstrap JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let events = []; // Inisialisasi variabel events
+
+            function getTodayDateString() {
+                const today = new Date();
+                return today.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'Asia/Jakarta' }).replace(/ /g, ' ');
+            }
+
+            function updateTime() {
+                const now = new Date();
+                const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); // Format waktu: HH:MM
+                const dateString = now.toLocaleDateString('id-ID', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric', timeZone: 'Asia/Jakarta' }); // Format tanggal: Senin, 01 Januari 2023
+                document.getElementById('datetime').innerHTML = `Event Pada ${timeString} - ${dateString}`; // Menampilkan waktu dan tanggal
+            }
+
+            // Panggil updateTime setiap detik untuk memperbarui waktu secara real-time
+            setInterval(updateTime, 1000);
+
+            function playAudio() {
+                var audio = document.getElementById("animeSound");
+                audio.play();
+            }
+
+            function displayEvents(events) {
+                const eventsContainer = document.getElementById('events-container');
+                eventsContainer.innerHTML = ''; // Clear previous results
+
+                events.forEach(event => {
+                    const eventElement = document.createElement('div');
+                    eventElement.classList.add('event');
+                    eventElement.innerHTML = `
+                        <h2>${event['Nama Acara (Link acara klik)']}</h2>
+                        <p>Date: ${event['Tanggal']}</p>
+                        <p>Time: ${event['Jam']}</p>
+                        <p>Location: ${event['Lokasi (baca keterangan lebih lanjut di Facebook Page)']}</p>
+                        <p>Area: ${event['Area']}</p>
+                        <p>Last Update: ${event['Last Update']}</p>
+                        <a href="${event['Link Acara']}" target="_blank">Event Link</a>
+                    `;
+                    eventsContainer.appendChild(eventElement);
+                });
+
+                if (events.length === 0) {
+                    eventsContainer.innerHTML = '<p>Event coming soon...</p>';
+                }
+            }
+
+            function searchEvents(query) {
+                const lowerCaseQuery = query.toLowerCase();
+                return events.filter(event => event['Nama Acara (Link acara klik)'].toLowerCase().includes(lowerCaseQuery) || event['Lokasi (baca keterangan lebih lanjut di Facebook Page)'].toLowerCase().includes(lowerCaseQuery));
+            }
+
+            const todayEvents = events.filter(event => event['Tanggal'] === getTodayDateString());
+            displayEvents(todayEvents);
+
+            function handleSearch() {
+                const searchQuery = document.getElementById('search-input').value.trim();
+                if (searchQuery) {
+                    const filteredEvents = searchEvents(searchQuery);
+                    displayEvents(filteredEvents);
+                } else {
+                    displayEvents(todayEvents);
+                }
+            }
+
+            document.getElementById('search-input').addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    handleSearch();
+                }
+            });
+
+            document.getElementById('toggleTheme').addEventListener('click', () => {
+                const body = document.body;
+                if (body.classList.contains('dark-theme')) {
+                    body.classList.remove('dark-theme');
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    body.classList.add('dark-theme');
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-theme');
+            } else {
+                document.body.classList.remove('dark-theme');
+            }
+
+            function fetchDataFromAPI() {
+                const url = 'https://sheet.best/api/sheets/07db4fd7-1649-4d61-989c-da6ec069a256';
+
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        events = data;
+                        const todayEvents = events.filter(event => event['Tanggal'] === getTodayDateString());
+                        displayEvents(todayEvents); // Memanggil displayEvents setelah menerima data dari API
+                    })
+                    .catch(error => {
+                        console.error('Error fetching data:', error);
+                    });
+            }
+
+            fetchDataFromAPI(); // Panggil fungsi untuk mendapatkan data dari API
+        });
+    </script>
 </body>
 </html>
