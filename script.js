@@ -1779,7 +1779,13 @@ document.addEventListener("DOMContentLoaded", function() {
          "G": "https:\/\/www.facebook.com\/groups\/251875943835\/permalink\/10162223734963836\/"
         }
        ];
-   
+
+     function filterUpcomingEvents(events) {
+        const today = getTodayDate(); // Dapatkan tanggal hari ini
+        return events.filter(event => new Date(event.A) >= new Date(today)); // Bandingkan tanggal event dengan tanggal hari ini
+    }
+    const upcomingEvents = filterUpcomingEvents(events);
+    displayEvents(upcomingEvents);
        function getTodayDateString() {
         const today = new Date();
         return today.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'Asia/Jakarta' }).replace(/ /g, ' ');
