@@ -1779,13 +1779,9 @@ document.addEventListener("DOMContentLoaded", function() {
          "G": "https:\/\/www.facebook.com\/groups\/251875943835\/permalink\/10162223734963836\/"
         }
        ];
-
-     function filterUpcomingEvents(events) {
-        const today = getTodayDate(); // Dapatkan tanggal hari ini
-        return events.filter(event => new Date(event.A) >= new Date(today)); // Bandingkan tanggal event dengan tanggal hari ini
-    }
-    const upcomingEvents = filterUpcomingEvents(events);
-    displayEvents(upcomingEvents);
+   
+      
+        
        function getTodayDateString() {
         const today = new Date();
         return today.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'Asia/Jakarta' }).replace(/ /g, ' ');
@@ -1881,8 +1877,16 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function searchEvents(query) {
         const lowerCaseQuery = query.toLowerCase();
-        return events.filter(event => event.E.toLowerCase().includes(lowerCaseQuery) || event.D.toLowerCase().includes(lowerCaseQuery));
+        const filteredEvents = events.filter(event => {
+            const eventDate = new Date(event.A); // Mengubah tanggal acara menjadi objek Date
+            const eventDateString = eventDate.toLocaleDateString('en-GB', { year: 'numeric', month: '2-digit', day: '2-digit' });
+    
+            // Memeriksa apakah acara cocok dengan kueri dan belum lewat tanggalnya
+            return (event.E.toLowerCase().includes(lowerCaseQuery) || event.D.toLowerCase().includes(lowerCaseQuery)) && eventDateString >= getTodayDate();
+        });
+        return filteredEvents;
     }
+    
 
     const todayEvents = events.filter(event => event.A === getTodayDateString());
     displayEvents(todayEvents);
