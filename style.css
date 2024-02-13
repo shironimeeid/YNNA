@@ -76,13 +76,14 @@ body, html {
   float: right;
   display: block;
   border: none;
-  background-color: #00000000000000; 
+  background-color: #000000; /* Mengubah nilai background-color menjadi transparent */
   color: white;
   text-align: center;
   padding: 14px 20px;
   cursor: pointer;
   transition: background 0.3s ease;
 }
+
 
 .navbar button:hover {
   background-color: rgba(255, 0, 234, 0)
@@ -124,7 +125,7 @@ body, html {
 .event {
   background-color: #f9f9f9;
   border: 1px solid #ddd;
-  background-image: url('/file/YNNA.jpg');
+  background-image: url('https://telegra.ph/file/68b1dcc94b019bb05701a.jpg');
   background-size: cover; /* Menyesuaikan ukuran gambar */
   background-position: center; /* Posisi gambar di tengah kotak event */
   background-repeat: no-repeat; /* Menghindari pengulangan gambar */
@@ -136,7 +137,7 @@ body, html {
 }
 
 .light-theme .event {
-  background-image: url('/file/YNNA.jpg'); /* Gunakan gambar yang sama di mode terang */
+  background-image: url('https://telegra.ph/file/68b1dcc94b019bb05701a.jpg'); /* Gunakan gambar yang sama di mode terang */
   background-color: rgba(255, 255, 255, 0.8); /* Warna latar belakang dengan opasitas rendah */
   border-color: #ddd;
   color: #000000; /* Warna teks di mode terang */
@@ -144,7 +145,7 @@ body, html {
 }
 
 .dark-theme .event {
-  background-image: url('/file/YNNA.jpg');
+  background-image: url('https://telegra.ph/file/68b1dcc94b019bb05701a.jpg');
   background-color: rgba(0, 0, 0, 0.6);
   border-color: #000000;
   color: #fff;
@@ -269,3 +270,20 @@ body {
   outline: none;
   box-shadow: none;
 }
+
+.text-pink {
+    color: rgb(255, 0, 157);
+}
+
+.text-blue {
+    color: rgb(0, 238, 255);
+}
+
+.text-green {
+    color: rgb(238, 255, 0);
+}
+
+.text-purple {
+    color: rgb(140, 0, 255);
+}
+
