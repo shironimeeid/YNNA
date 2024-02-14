@@ -1882,7 +1882,7 @@ document.addEventListener("DOMContentLoaded", function() {
             const eventDateString = eventDate.toLocaleDateString('en-GB', { year: 'numeric', month: '2-digit', day: '2-digit' });
     
             // Memeriksa apakah acara cocok dengan kueri dan belum lewat tanggalnya
-            return (event.E.toLowerCase().includes(lowerCaseQuery) || event.D.toLowerCase().includes(lowerCaseQuery)) && eventDateString >= getTodayDate();
+            return (event.E.toLowerCase().includes(lowerCaseQuery) || event.D.toLowerCase().includes(lowerCaseQuery)) || event.C.toLowerCase().includes(lowerCaseQuery) && eventDateString >= getTodayDate();
         });
         return filteredEvents;
     }
