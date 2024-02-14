@@ -134,7 +134,17 @@ body, html {
   color: #ffffff; /* Warna teks default */
   font-weight: bold; /* Membuat teks menjadi tebal */
   border-radius: 5px; /* Menggunakan border-radius untuk membuat sudut kotak menjadi melengkung */
+  transition: transform 0.3s ease;
 }
+
+.event:hover {
+  transform: scale(1.1); /* Memperbesar elemen saat dihover */
+}
+
+.event:active {
+  transform: scale(0.9); /* Memperkecil elemen saat ditekan */
+}
+
 
 .light-theme .event {
   background-image: url('https://telegra.ph/file/68b1dcc94b019bb05701a.jpg'); /* Gunakan gambar yang sama di mode terang */
