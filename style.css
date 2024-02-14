@@ -144,6 +144,31 @@ body, html {
   font-weight: bold; /* Membuat teks menjadi tebal */
 }
 
+
+@keyframes rainbow-glow {
+  0% { box-shadow: 0 0 10px hsl(0, 100%, 50%); } /* Merah */
+  16.67% { box-shadow: 0 0 10px hsl(60, 100%, 50%); } /* Oranye */
+  33.33% { box-shadow: 0 0 10px hsl(120, 100%, 50%); } /* Kuning */
+  50% { box-shadow: 0 0 10px hsl(180, 100%, 50%); } /* Hijau */
+  66.67% { box-shadow: 0 0 10px hsl(240, 100%, 50%); } /* Cyan */
+  83.33% { box-shadow: 0 0 10px hsl(300, 100%, 50%); } /* Biru */
+  100% { box-shadow: 0 0 10px hsl(360, 100%, 50%); } /* Merah */
+}
+
+
+
+.dark-theme .event {
+  background-image: url('https://telegra.ph/file/68b1dcc94b019bb05701a.jpg');
+  background-color: rgba(0, 0, 0, 0.6);
+  border-color: #000000;
+  color: #fff;
+  font-weight: bold;
+  animation: rainbow-glow 5s infinite; /* Animasi efek glow dengan perubahan warna */
+}
+
+
+
+
 .dark-theme .event {
   background-image: url('https://telegra.ph/file/68b1dcc94b019bb05701a.jpg');
   background-color: rgba(0, 0, 0, 0.6);
@@ -286,4 +311,3 @@ body {
 .text-purple {
     color: rgb(140, 0, 255);
 }
-
