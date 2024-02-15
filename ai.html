@@ -91,7 +91,7 @@
             }
 
             // Handle the API response
-            outputElement.innerHTML = `<span style="color: #ff0000; font-weight: bold;">${data.data || 'Tidak ada hasil. mungkin server sedang maintenace'}</span>`;
+            outputElement.innerHTML = `<span style="color: #ff0000; font-weight: bold;">${data.data || 'Tidak ada hasil. mungkin server sedang maintenace'}</span><br><span style="color: #00ff00; font-weight: ">Gunakan Fiture Route Jika AI Error</span>`;
         } catch (error) {
             outputElement.innerHTML = "Error: " + error.message;
         }
