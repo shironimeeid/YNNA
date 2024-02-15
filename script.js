@@ -1817,7 +1817,7 @@ document.addEventListener("DOMContentLoaded", function() {
             <p>Location: ${event.C ? event.C : 'Tidak tersedia'}</p>
             <p>Area: ${event.D ? event.D : 'Tidak tersedia'}</p>
             <p>Last Update: ${event.F ? event.F : 'Tidak tersedia'}</p>
-            <a href="${event.G ? event.G : '#'}" target="_blank">${event.G ? 'Event Link' : 'Tidak tersedia'}</a>
+            <a href="${event.G ? event.G : '#'}" target="_blank" class="btn btn-warning">${event.G ? 'Event Link' : 'Tidak tersedia'}</a>
         `;
         
 
