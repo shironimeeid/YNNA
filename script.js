@@ -1792,7 +1792,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const now = new Date();
         const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); // Format waktu: HH:MM
         const dateString = now.toLocaleDateString('id-ID', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric', timeZone: 'Asia/Jakarta'  }); // Format tanggal: Senin, 01 Januari 2023
-        document.getElementById('datetime').innerHTML = `Event Pada ${timeString} - ${dateString}`; // Menampilkan waktu dan tanggal
+        document.getElementById('datetime').innerHTML = `${timeString} - Event Pada ${dateString}`; // Menampilkan waktu dan tanggal
     }
 
     // Panggil updateTime setiap detik untuk memperbarui waktu secara real-time
@@ -1835,16 +1835,17 @@ document.addEventListener("DOMContentLoaded", function() {
     
             eventsContainer.appendChild(eventElement);
 
-             /// INI AI GENERATE
+             /// INI AI GENERATE GPT-V4
         const aiButton = document.createElement('button');
         aiButton.className = 'ai-btn btn btn-success';
         aiButton.textContent = 'AI-Route';
         aiButton.addEventListener('click', () => {
-            // Save event name to localStorage
-            localStorage.setItem('eventName', event.C);
+
+        /// FILE IMPUT SYSTEM AI    
+        window.location.href = 'ai.html';
+        localStorage.setItem('eventName', event.C);
         
             // Redirect to ai.html
-            window.location.href = 'ai.html';
         });
         
         eventElement.appendChild(aiButton);
