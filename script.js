@@ -1819,31 +1819,9 @@ document.addEventListener("DOMContentLoaded", function() {
             <p>Last Update: ${event.F ? event.F : 'Tidak tersedia'}</p>
             <a href="${event.G ? event.G : '#'}" target="_blank">${event.G ? 'Event Link' : 'Tidak tersedia'}</a>
         `;
-       
-    
-
-
-        /// INI AI GENERATE
-        const aiButton = document.createElement('button');
-        aiButton.className = 'ai-btn btn btn-secondary';
-        aiButton.textContent = 'AI-Generate';
-        aiButton.addEventListener('click', () => {
-            // Save event name to localStorage
-            localStorage.setItem('eventName', event.C);
-        
-            // Redirect to ai.html
-            window.location.href = 'ai.html';
-        });
-        
-        eventElement.appendChild(aiButton);
-        eventsContainer.appendChild(eventElement);
-        
-        if (events.length === 0) {
-            eventsContainer.innerHTML = '<p>No events available.</p>';
-        }
         
 
-        
+
             // Tambahkan tombol "Route" di bawah tautan acara
             const routeButton = document.createElement('button');
             routeButton.className = 'route-btn btn btn-primary';
@@ -1856,7 +1834,25 @@ document.addEventListener("DOMContentLoaded", function() {
             eventElement.appendChild(routeButton);
     
             eventsContainer.appendChild(eventElement);
+
+             /// INI AI GENERATE
+        const aiButton = document.createElement('button');
+        aiButton.className = 'ai-btn btn btn-success';
+        aiButton.textContent = 'AI-Route';
+        aiButton.addEventListener('click', () => {
+            // Save event name to localStorage
+            localStorage.setItem('eventName', event.C);
+        
+            // Redirect to ai.html
+            window.location.href = 'ai.html';
         });
+        
+        eventElement.appendChild(aiButton);
+        eventsContainer.appendChild(eventElement);
+        
+        });
+
+        
     
         if (events.length === 0) {
             eventsContainer.innerHTML = '<p>Tidak ada event yang tersedia.</p>';
