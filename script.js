@@ -1825,7 +1825,7 @@ document.addEventListener("DOMContentLoaded", function() {
             // Tambahkan tombol "Route" di bawah tautan acara
             const routeButton = document.createElement('button');
             routeButton.className = 'route-btn btn btn-primary';
-            routeButton.textContent = 'Route';
+            routeButton.textContent = 'Route Maps';
             routeButton.addEventListener('click', () => {
                 const origin = event.C; // Lokasi acara
                 const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(origin)}`;
