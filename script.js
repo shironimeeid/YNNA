@@ -1891,8 +1891,8 @@ document.addEventListener("DOMContentLoaded", function() {
             eventElement.innerHTML = `
                 <h2>${event.E}</h2>
                 <p>Date: ${event.A}</p>
-                <p>Time: ${event.B}</p>
-                <p>Location: ${event.C}</p>
+                <p>Time: ${event.B ? event.B : 'Waktu Tidak Tersedia'}</p> <!-- Handling undefined location -->
+                <p>Location: ${event.C ? event.C : 'Lokasi Tidak Tersedia'}</p> <!-- Handling undefined location -->
                 <p>Area: ${event.D}</p>
                 <p>Last Update: ${event.F}</p>
                 <a href="${event.G}" target="_blank">Event Link</a>
