@@ -1,25 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     const events = [
  {
-  "Column1": 1,
-  "A": "Tanggal",
-  "B": "Jam",
-  "C": "Lokasi (baca keterangan lebih lanjut di Facebook Page)",
-  "D": "Area",
-  "E": "Nama Acara (Link acara klik)",
-  "F": "Last Update",
-  "G": "Link Acara"
- },
- {
-  "Column1": 2,
-  "C": "Eventmu belum ada? perbaikan jadwal event? -->",
-  "D": "----------------->",
-  "E": "Post atau edit event (komentar di chart) atau ke grup fb-> Join grup ->",
-  "F": "---------------------->",
-  "G": "bit.ly\/JFestAdd"
- },
- null,
- {
   "Column1": 3,
   "A": "14 Feb 2024",
   "B": "12:00",
@@ -1889,13 +1870,14 @@ document.addEventListener("DOMContentLoaded", function() {
             const eventElement = document.createElement('div');
             eventElement.classList.add('event');
             eventElement.innerHTML = `
-                <h2>${event.E}</h2>
-                <p>Date: ${event.A}</p>
-                <p>Time: ${event.B ? event.B : 'Waktu Tidak Tersedia'}</p> <!-- Handling undefined location -->
-                <p>Location: ${event.C ? event.C : 'Lokasi Tidak Tersedia'}</p> <!-- Handling undefined location -->
-                <p>Area: ${event.D}</p>
-                <p>Last Update: ${event.F}</p>
-                <a href="${event.G}" target="_blank">Event Link</a>
+             <h2>${event.E ? event.E : 'Tidak tersedia'}</h2>
+            <p>Date: ${event.A ? event.A : 'Tidak tersedia'}</p>
+            <p>Time: ${event.B ? event.B : 'Tidak tersedia'}</p>
+            <p>Location: ${event.C ? event.C : 'Tidak tersedia'}</p>
+            <p>Area: ${event.D ? event.D : 'Tidak tersedia'}</p>
+            <p>Last Update: ${event.F ? event.F : 'Tidak tersedia'}</p>
+            <a href="${event.G ? event.G : '#'}" target="_blank">${event.G ? 'Event Link' : 'Tidak tersedia'}</a>
+        `;
             `;
             
             // Tambahkan tombol "Route" di bawah tautan acara
