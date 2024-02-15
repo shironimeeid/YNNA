@@ -1810,14 +1810,14 @@ document.addEventListener("DOMContentLoaded", function() {
             const eventElement = document.createElement('div');
             eventElement.classList.add('event');
             eventElement.innerHTML = `
-                <h2>${event.E}</h2>
-                <p>Date: ${event.A}</p>
-                <p>Time: ${event.B ? event.B : 'Tidak tersedia'}</p>
-                <p>Location: ${event.C}</p>
-                <p>Area: ${event.D}</p>
-                <p>Last Update: ${event.F}</p>
-                <a href="${event.G}" target="_blank">Event Link</a>
-            `;
+            <h2>${event.E ? event.E : 'Tidak tersedia'}</h2>
+            <p>Date: ${event.A ? event.A : 'Tidak tersedia'}</p>
+            <p>Time: ${event.B ? event.B : 'Tidak tersedia'}</p>
+            <p>Location: ${event.C ? event.C : 'Tidak tersedia'}</p>
+            <p>Area: ${event.D ? event.D : 'Tidak tersedia'}</p>
+            <p>Last Update: ${event.F ? event.F : 'Tidak tersedia'}</p>
+            <a href="${event.G ? event.G : '#'}" target="_blank">${event.G ? 'Event Link' : 'Tidak tersedia'}</a>
+        `;
             
             // Tambahkan tombol "Route" di bawah tautan acara
             const routeButton = document.createElement('button');
