@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
+
     const events = [
         {
          "Column1": 25,
@@ -1781,6 +1782,7 @@ document.addEventListener("DOMContentLoaded", function() {
        ];
    
       
+       
       
         
        function getTodayDateString() {
@@ -1820,6 +1822,7 @@ document.addEventListener("DOMContentLoaded", function() {
             <a href="${event.G ? event.G : '#'}" target="_blank" class="btn btn-warning">${event.G ? 'Event Link' : 'Tidak tersedia'}</a>
         `;
         
+     
 
 
             // Tambahkan tombol "Route" di bawah tautan acara
@@ -1886,37 +1889,150 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
     
+
+
+
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //// FUSE JS NYAAA
+
+
+function filterUpcomingEvents(events) {
+    const today = getTodayDate();
+    return events.filter(event => event['Tanggal'] >= today);
+}
+    const navbar = document.getElementById('navbar');
     const fuseOptions = {
         includeScore: true,
-        // Konfigurasi keys untuk pencarian
-        keys: ['E', 'D'] // 'E' untuk nama event, 'D' untuk lokasi
+        keys: ['C', 'D', 'E'] // Sesuaikan dengan struktur data event Anda
     };
 
     const fuse = new Fuse(events, fuseOptions);
 
-    const navbar = document.getElementById('navbar');
 
-
-    function searchEvents(query) {
-        const lowerCaseQuery = query.toLowerCase();
-        const filteredEvents = events.filter(event => {
-            const eventDate = new Date(event.A); // Mengubah tanggal acara menjadi objek Date
-            const eventDateString = eventDate.toLocaleDateString('en-GB', { year: 'numeric', month: '2-digit', day: '2-digit' });
-    
-            // Memeriksa apakah acara cocok dengan kueri dan belum lewat tanggalnya
-            return (event.E.toLowerCase().includes(lowerCaseQuery) || event.D.toLowerCase().includes(lowerCaseQuery)) || event.C.toLowerCase().includes(lowerCaseQuery) && eventDateString >= getTodayDate();
-        });
-        return filteredEvents;
+       // Fungsi untuk mendapatkan tanggal hari ini dalam format yang sesuai dengan data
+    function getTodayDate() {
+        const today = new Date();
+        return today.toLocaleDateString('en-GB', { year: 'numeric', month: '2-digit', day: '2-digit' });
     }
     
+    function searchEvents(query) {
+        const lowerCaseQuery = query.toLowerCase();
+        const eventDateFilter = events.filter(event => {
+            const eventDate = new Date(event.A);
+            const eventDateString = eventDate.toLocaleDateString('en-GB', { year: 'numeric', month: '2-digit', day: '2-digit' });
+            return (event.E.toLowerCase().includes(lowerCaseQuery) || event.D.toLowerCase().includes(lowerCaseQuery) || event.C.toLowerCase().includes(lowerCaseQuery)) && eventDateString >= getTodayDate();
+        });
     
+        if (eventDateFilter.length > 0) {
+            return eventDateFilter;
+        } else {
+            const searchResults = fuse.search(query);
+            if (searchResults.length === 0) {
+                const closestMatch = fuse.search(query, { limit: 1 })[0];
+                if (closestMatch) {
+                    // Menampilkan saran di bawah pencarian
+                    const suggestionBox = document.getElementById("suggestionBox");
+                    suggestionBox.innerHTML = `Mungkin maksud Anda adalah <strong>${closestMatch.item['C']}</strong> atau <strong>${closestMatch.item['D']}</strong>`;
+                    suggestionBox.style.display = "block";
+                    return [];
+                }
+            } else {
+                return searchResults.map(result => result.item);
+            }
+        }
+        // Sembunyikan suggestionBox jika tidak ada saran
+        document.getElementById("suggestionBox").style.display = "none";
+        return [];
+    }
+
+
+    function handleSearch() {
+        const searchQuery = document.getElementById('search-input').value.trim();
+        if (searchQuery) {
+            const filteredEvents = searchEvents(searchQuery);
+            document.getElementById("suggestionBox").style.display = "none";
+            document.getElementById("suggestionBox").innerHTML = "";
+            displayEvents(filteredEvents);
+        } else {
+            displayEvents(todayEvents);
+        }
+    }
+
+
+    function showSuggestions(value) {
+        if (!value) {
+            document.getElementById("suggestionBox").style.display = "none";
+            return;
+        }
+    
+        const searchResults = fuse.search(value);
+        let suggestionsHTML = "";
+    
+        if (searchResults.length > 0) {
+            suggestionsHTML = searchResults.slice(0, 5).map(result => 
+                `<div onclick="selectSuggestion('${result.item.C}')" class="suggestion-item">${result.item.C} atau ${result.item.D}</div>`
+            ).join('');
+        } else {
+            // Jika tidak ada hasil yang cocok, bisa menampilkan pesan default atau saran lain
+            suggestionsHTML = "<div class='suggestion-item'>Tidak ada saran</div>";
+        }
+    
+        const suggestionBox = document.getElementById("suggestionBox");
+        suggestionBox.innerHTML = suggestionsHTML;
+        suggestionBox.style.display = "block";
+    }
+    
+    function selectSuggestion(value) {
+        document.getElementById("search-input").value = value;
+        document.getElementById("suggestionBox").style.display = "none";
+        // Anda dapat menambahkan logika tambahan di sini untuk menangani pencarian berdasarkan saran yang dipilih
+    }
+
+    
+   /* function handleSearch() {
+        const searchQuery = document.getElementById('search-input').value.trim();
+        if (searchQuery) {
+            // Mengosongkan suggestionBox setiap kali melakukan pencarian baru
+            document.getElementById("suggestionBox").style.display = "none";
+            document.getElementById("suggestionBox").innerHTML = "";
+    
+            const filteredEvents = searchEvents(searchQuery); 
+        } else {
+        }
+    } */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     const todayEvents = events.filter(event => event.A === getTodayDateString());
     displayEvents(todayEvents);
 
     // Fungsi untuk menangani pencarian dengan tombol "Enter"
-    function handleSearch() {
+    /* function handleSearch() {
         const searchQuery = document.getElementById('search-input').value.trim();
         if (searchQuery) {
             const filteredEvents = searchEvents(searchQuery);
@@ -1924,7 +2040,7 @@ document.addEventListener("DOMContentLoaded", function() {
         } else {
             displayEvents(todayEvents);
         }
-    }
+    } */
 
       // Fungsi untuk memeriksa dan mereset absensi jika sudah lewat dari tanggal event
       function checkAndResetAbsensi(events) {
@@ -2018,18 +2134,6 @@ setTimeout(function() {
 
 
 
-
-    // Fungsi untuk mendapatkan tanggal hari ini dalam format yang sesuai dengan data
-function getTodayDate() {
-    const today = new Date();
-    return today.toLocaleDateString('en-GB', { year: 'numeric', month: '2-digit', day: '2-digit' });
-}
-
-// Fungsi untuk menampilkan hanya event yang belum lewat
-function filterUpcomingEvents(events) {
-    const today = getTodayDate();
-    return events.filter(event => event['Tanggal'] >= today);
-}
 
 
 
