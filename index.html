@@ -36,10 +36,22 @@
         <h1 class="display-4">Selamat Datang di YNNA</h1>
         <p class="lead">Ini adalah pencarian jadwal event Real Time</p>
         <div id="datetime"></div>
-        <div id="search-container" class="input-group mb-3">
+    <div id="search-container" class="input-group mb-3">
             <input type="text" id="search-input" class="form-control" placeholder="Cari event, area, atau lokasi...">
             <button onclick="handleSearch()" class="btn btn-outline-secondary" type="button" id="button-addon2">Cari</button>
-        </div>        
+        <div id="correctionMessage"></div> 
+        <style>
+            .correction-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}
+        </style>
+        </div>
+        <div id="suggestionBox" style="display: none;"></div>         
+        <script>
+            
+        </script>
         <div id="events-container" class="events-container"></div>
         <audio id="animeSound" src="file/anime.mp3"></audio>
     </div>
