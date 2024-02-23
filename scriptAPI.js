@@ -79,13 +79,13 @@ document.addEventListener("DOMContentLoaded", function() {
             const eventElement = document.createElement('div');
             eventElement.classList.add('event');
             eventElement.innerHTML = `
-                <h2>${event['Nama Acara (Link acara klik)']}</h2>
-                <p>Date: ${event['Tanggal']}</p>
-                <p>Time: ${event['Jam']}</p>
-                <p>Location: ${event['Lokasi (baca keterangan lebih lanjut di Facebook Page)']}</p>
-                <p>Area: ${event['Area']}</p>
-                <p>Last Update: ${event['Last Update']}</p>
-                <a href="${event['Link Acara'] || '#'}" target="_blank" class="btn btn-warning">Event Link</a>
+            <h2>${event['Nama Acara (Link acara klik)'] || 'Tidak Tersedia'}</h2>
+            <p>Date: ${event['Tanggal'] || 'Tidak Tersedia'}</p>
+            <p>Time: ${event['Jam'] || 'Tidak Tersedia'}</p>
+            <p>Location: ${event['Lokasi (baca keterangan lebih lanjut di Facebook Page)'] || 'Tidak Tersedia'}</p>
+            <p>Area: ${event['Area'] || 'Tidak Tersedia'}</p>
+            <p>Last Update: ${event['Last Update'] || 'Tidak Tersedia'}</p>
+            <a href="${event['Link Acara'] || '#'}" target="_blank" class="btn btn-warning">Event Link</a>
             `;
     
             // Tambahkan tombol "Route"
