@@ -184,15 +184,37 @@ document.addEventListener("DOMContentLoaded", function() {
     
     
 
+
+
+    // pencarian koreksi & hoem reflash
+  
     function handleSearch() {
         const searchQuery = document.getElementById('search-input').value.trim();
         if (searchQuery) {
-            const filteredEvents = searchEvents(searchQuery);
-            displayEvents(filteredEvents);
+            const searchResults = fuse.search(searchQuery);
+            if (searchResults.length > 0) {
+                const filteredEvents = searchResults.map(result => result.item);
+                displayEvents(filteredEvents);
+            } else {
+                const correctionMessage = document.getElementById('correction-message');
+                correctionMessage.innerHTML = 'Maksud Anda: <em>[saran]</em>?';
+            }
         } else {
-            fetchEventsForToday(); // Atau tampilkan pesan bahwa tidak ada input pencarian
+            fetchEventsForToday();
         }
     }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        // Mendapatkan elemen link 'Home' berdasarkan ID
+        var homeLink = document.getElementById('redirectToHome');
+    
+        // Menambahkan event listener untuk event 'click'
+        homeLink.addEventListener('click', function(e) {
+            e.preventDefault(); // Mencegah perilaku default link
+            window.location.reload(); // Me-refresh halaman
+        });
+    });
+    
     
     document.addEventListener('DOMContentLoaded', function () {
         const searchInput = document.getElementById('search-input');
@@ -274,4 +296,6 @@ if (body.classList.contains('dark-theme')) {
     localStorage.setItem('theme', 'dark'); // Simpan preferensi tema pengguna di localStorage
 }
 });
+
+
 });
