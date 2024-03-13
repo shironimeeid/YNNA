@@ -31,7 +31,16 @@
     </div>
     <div class="container mt-5">
         <h1 class="display-4">Selamat Datang di YNNA</h1>
+
         <p class="lead">Ini adalah pencarian jadwal event Real Time</p>
+        <div id="indicator-container">
+            <span class="indicator" style="background-color: yellow;">Hari Ini</span>
+            <span class="indicator" style="background-color: aqua;">Besok</span>
+            <span class="indicator" style="background-color: rgb(255, 4, 255);">Bulan Depan</span>
+        </div>
+
+
+
         <div id="datetime"></div>
         <div id="search-container" class="input-group mb-3">
             <input type="text" id="search-input" class="form-control" placeholder="Cari event atau lokasi...">
@@ -43,6 +52,31 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
     <script>
+
+document.addEventListener('DOMContentLoaded', function() {
+    const body = document.body;
+    const toggleThemeButton = document.getElementById('toggleTheme');
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    
+    // Terapkan tema yang tersimpan saat halaman dimuat
+    if (savedTheme === 'dark') {
+        body.setAttribute('data-theme', 'dark');
+    } else {
+        body.setAttribute('data-theme', 'light');
+    }
+
+    // Event listener untuk tombol toggle tema
+    toggleThemeButton.addEventListener('click', () => {
+        const currentTheme = body.getAttribute('data-theme');
+        if (currentTheme === 'dark') {
+            body.setAttribute('data-theme', 'light');
+            localStorage.setItem('theme', 'light');
+        } else {
+            body.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+        }
+    });
+});
 
         document.addEventListener("DOMContentLoaded", function() {
             const events = [
@@ -1825,6 +1859,56 @@
                  "G": "https:\/\/www.facebook.com\/groups\/251875943835\/permalink\/10162223734963836\/"
                 }
                ];
+
+function getTodayDate() {
+    const today = new Date();
+    return today.toISOString().split('T')[0];
+}
+
+function filterUpcomingEvents(events) {
+    const todayStr = getTodayDate(); 
+    return events.filter(event => {
+       
+        const eventDateStr = event.A;
+        return eventDateStr >= todayStr;
+    });
+}
+
+function displayEvents(events) {
+    const upcomingEvents = filterUpcomingEvents(events); 
+    const eventsContainer = document.getElementById('events-container');
+    eventsContainer.innerHTML = ''; // Bersihkan hasil sebelumnya
+
+    upcomingEvents.forEach(event => {
+    });
+
+    if (upcomingEvents.length === 0) {
+        eventsContainer.innerHTML = '<p>Tidak ada event yang tersedia.</p>';
+    }
+}
+
+function getTodayDate() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); 
+    return today;
+}
+
+function isEventUpcoming(eventDateString) {
+    const eventDate = new Date(eventDateString);
+    eventDate.setHours(0, 0, 0, 0); 
+    const today = getTodayDate();
+    return eventDate >= today;
+}
+
+
+
+
+
+
+    function searchEvents(query) {
+        const filteredEvents = events.filter(event => event.E.toLowerCase().includes(query.toLowerCase()) || event.D.toLowerCase().includes(query.toLowerCase()));
+        return filterUpcomingEvents(filteredEvents); 
+    }
            
                function getTodayDateString() {
                 const today = new Date();
@@ -1837,8 +1921,7 @@
                 const dateString = now.toLocaleDateString('id-ID', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric', timeZone: 'Asia/Jakarta'  }); // Format tanggal: Senin, 01 Januari 2023
                 document.getElementById('datetime').innerHTML = `Event Pada ${timeString} - ${dateString}`; // Menampilkan waktu dan tanggal
             }
-        
-            // Panggil updateTime setiap detik untuk memperbarui waktu secara real-time
+
             setInterval(updateTime, 1000);
         
             function playAudio() {
@@ -1846,51 +1929,84 @@
                 audio.play();
             }
             
+            
             function displayEvents(events) {
-                const eventsContainer = document.getElementById('events-container');
-                eventsContainer.innerHTML = ''; // Clear previous results
-            
-                events.forEach(event => {
-                    const eventElement = document.createElement('div');
-                    eventElement.classList.add('event');
-                    eventElement.innerHTML = `
-                        <h2>${event.E}</h2>
-                        <p>Date: ${event.A}</p>
-                        <p>Time: ${event.B}</p>
-                        <p>Location: ${event.C}</p>
-                        <p>Area: ${event.D}</p>
-                        <p>Last Update: ${event.F}</p>
-                        <a href="${event.G}" target="_blank">Event Link</a>
-                    `;
-                    
-                    // Tambahkan tombol "Route" di bawah tautan acara
-                    const routeButton = document.createElement('button');
-                    routeButton.className = 'route-btn btn btn-primary';
-                    routeButton.textContent = 'Route';
-                    routeButton.addEventListener('click', () => {
-                        const origin = event.C; // Lokasi acara
-                        const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(origin)}`;
-                        window.open(mapsUrl, '_blank');
-                    });
-                    eventElement.appendChild(routeButton);
-            
-                    eventsContainer.appendChild(eventElement);
-                });
-            
-                if (events.length === 0) {
-                    eventsContainer.innerHTML = '<p>Tidak ada event yang tersedia.</p>';
-                }
-            }
+    const today = getTodayDate();
+    const oneWeekFromNow = new Date(today);
+    oneWeekFromNow.setDate(oneWeekFromNow.getDate() + 7); // Tambahkan 7 hari untuk mendapatkan tanggal satu minggu dari sekarang
+    const oneMonthFromNow = new Date(today);
+    oneMonthFromNow.setMonth(oneMonthFromNow.getMonth() + 1); // Tambahkan 1 bulan untuk mendapatkan tanggal satu bulan dari sekarang
+
+    const upcomingEvents = events.filter(event => isEventUpcoming(event.A));
+    const eventsContainer = document.getElementById('events-container');
+    eventsContainer.innerHTML = '';
+    upcomingEvents.forEach(event => {
+        const eventDate = new Date(event.A);
+        const eventElement = document.createElement('div');
+        eventElement.classList.add('event');
+        if (eventDate.toISOString().split('T')[0] === today.toISOString().split('T')[0]) {
+            eventElement.classList.add('glow-today');
+        } else if (eventDate < oneWeekFromNow) {
+            eventElement.classList.add('glow-next-week');
+        } else if (eventDate < oneMonthFromNow) {
+            eventElement.classList.add('glow-next-month');
+        }
+
+        // Template HTML untuk event
+        eventElement.innerHTML = `
+        <img src="https://telegra.ph/file/68b1dcc94b019bb05701a.jpg" alt="Event Image" style="width:0%; height:auto;">
+            <h2>${event.E ? event.E : 'Tidak tersedia'}</h2>
+            <p>Date: ${event.A ? event.A : 'Tidak tersedia'}</p>
+            <p>Time: ${event.B ? event.B : 'Tidak tersedia'}</p>
+            <p>Location: ${event.C ? event.C : 'Tidak tersedia'}</p>
+            <p>Area: ${event.D ? event.D : 'Tidak tersedia'}</p>
+            <p>Last Update: ${event.F ? event.F : 'Tidak tersedia'}</p>
+            <a href="${event.G ? event.G : '#'}" target="_blank" class="btn btn-warning">${event.G ? 'Event Link' : 'Tidak tersedia'}</a>
+        `;
+
+        // Tambahkan tombol "Route"
+        const routeButton = document.createElement('button');
+        routeButton.className = 'route-btn btn btn-primary';
+        routeButton.textContent = 'Route';
+        routeButton.addEventListener('click', () => {
+            // Asumsikan event.C adalah lokasi acara yang valid
+            const origin = 'Lokasi pengguna'; // Placeholder, asumsikan ini diperoleh dari geolocation
+            const destination = event.C; // Menggunakan lokasi acara
+            const mapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(destination)}`;
+            window.open(mapsUrl, '_blank');
+        });
+        eventElement.appendChild(routeButton);
+
+        // Tambahkan tombol "AI-Route"
+        const aiButton = document.createElement('button');
+        aiButton.className = 'ai-btn btn btn-success';
+        aiButton.textContent = 'AI-Route';
+        aiButton.addEventListener('click', () => {
+            localStorage.setItem('eventName', event.C); // Menyimpan lokasi event
+            window.location.href = 'ai.html'; // Redirect ke ai.html
+        });
+        eventElement.appendChild(aiButton);
+
+        eventsContainer.appendChild(eventElement);
+    });
+
+    if (upcomingEvents.length === 0) {
+        eventsContainer.innerHTML = `
+            <div style="text-align: center;"> <!-- Tambahkan style untuk penyesuaian tampilan -->
+                <p>Tidak ada event yang tersedia.</p>
+                <img src="menhera.gif" alt="No Events Available" style="width: 300px; height: auto;"> <!-- Sesuaikan lokasi file GIF -->
+            </div>
+        `;
+    }
+}
         
+          
             document.addEventListener('DOMContentLoaded', function () {
                 const eventsContainer = document.getElementById('events-container');
-            
-                // Tambahkan event listener ke container acara
                 eventsContainer.addEventListener('click', function (event) {
                     if (event.target.classList.contains('route-btn')) {
                         const origin = event.target.parentNode.querySelector('p:nth-child(3)').textContent.split(": ")[1]; // Ambil lokasi dari elemen terkait
                         if (navigator.geolocation) {
-                            // Meminta izin geolokasi secara otomatis saat tombol "Route" diklik
                             navigator.geolocation.getCurrentPosition(position => {
                                 const userLocation = `${position.coords.latitude},${position.coords.longitude}`;
                                 const mapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(userLocation)}&destination=${encodeURIComponent(origin)}`;
@@ -1910,8 +2026,7 @@
             
             const fuseOptions = {
                 includeScore: true,
-                // Konfigurasi keys untuk pencarian
-                keys: ['E', 'D'] // 'E' untuk nama event, 'D' untuk lokasi
+                keys: ['E', 'D'] 
             };
         
             const fuse = new Fuse(events, fuseOptions);
@@ -1927,7 +2042,6 @@
             const todayEvents = events.filter(event => event.A === getTodayDateString());
             displayEvents(todayEvents);
         
-            // Fungsi untuk menangani pencarian dengan tombol "Enter"
             function handleSearch() {
                 const searchQuery = document.getElementById('search-input').value.trim();
                 if (searchQuery) {
@@ -1937,57 +2051,51 @@
                     displayEvents(todayEvents);
                 }
             }
-        
-              // Fungsi untuk memeriksa dan mereset absensi jika sudah lewat dari tanggal event
               function checkAndResetAbsensi(events) {
                 const today = new Date().toLocaleDateString('en-GB', { year: 'numeric', month: '2-digit', day: '2-digit' });
                 
                 events.forEach(event => {
                     if (event['Tanggal'] < today) {
-                        cancelAbsen(); // Panggil fungsi untuk reset formulir absensi
-                        return; // Keluar dari loop jika sudah menemukan event yang sudah lewat tanggalnya
+                        cancelAbsen();
+                        return;
                     }
                 });
             }
         
-            // Fungsi untuk menghapus input yang telah diisi oleh pengguna
             function cancelAbsen() {
                 document.getElementById("nama").value = "";
                 document.getElementById("cosplay").value = "";
-                document.getElementById("event").selectedIndex = 0; // Kembali ke opsi default
+                document.getElementById("event").selectedIndex = 0;
             }
         
         
             
-            // Event listener untuk input pencarian dengan "Enter"
             document.getElementById('search-input').addEventListener('keypress', function(event) {
                 if (event.key === 'Enter') {
                     handleSearch();
                 }
             });
         
-            // Event listener untuk tombol "Cari"
             document.getElementById('search-button').addEventListener('click', () => {
                 handleSearch();
             });
         
-            // Event listener untuk tombol "redirectToHome"
             document.getElementById('redirectToHome').addEventListener('click', (e) => {
-                e.preventDefault(); // Menghindari perilaku default
-                document.getElementById('search-input').value = ''; // Mengosongkan input pencarian
-                displayEvents(todayEvents); // Menampilkan event berdasarkan tanggal saat ini
+                e.preventDefault(); 
+                document.getElementById('search-input').value = ''; 
+                displayEvents(todayEvents); 
             });
         
             document.getElementById("redirectToInstagram").addEventListener("click", function(event) {
-                event.preventDefault(); // Mencegah tindakan default dari tautan
-                playAudio(); // Memanggil fungsi untuk memutar audio
-                window.location.href = this.getAttribute("href"); // Redirect ke tautan yang ditentukan
+                event.preventDefault(); 
+                playAudio();
+                window.location.href = this.getAttribute("href"); 
             });
         
             document.getElementById("redirectToDjango").addEventListener("click", function(event) {
-                event.preventDefault(); // Mencegah tindakan default dari tautan
-                playAudio(); // Memanggil fungsi untuk memutar audio
-                window.location.href = this.getAttribute("href"); // Redirect ke tautan yang ditentukan
+                event.preventDefault(); 
+                playAudio(); 
+                window.location.href = this.getAttribute("href"); 
             });
         
            
@@ -1995,31 +2103,24 @@
             document.addEventListener('DOMContentLoaded', function() {
     const savedTheme = localStorage.getItem('theme');
     const body = document.body;
-    
-    // Periksa apakah pengguna sebelumnya memilih tema gelap
     if (savedTheme === 'dark') {
         body.classList.add('dark-theme');
     } else {
         body.classList.remove('dark-theme');
     }
-
-    // Tambahkan event listener untuk tombol toggle tema
     document.getElementById('toggleTheme').addEventListener('click', () => {
-        // Periksa apakah tema saat ini adalah tema gelap atau terang, lalu ubah sesuai dengan itu
         if (body.classList.contains('dark-theme')) {
             body.classList.remove('dark-theme');
-            localStorage.setItem('theme', 'light'); // Simpan preferensi tema pengguna di localStorage
+            localStorage.setItem('theme', 'light'); 
         } else {
             body.classList.add('dark-theme');
-            localStorage.setItem('theme', 'dark'); // Simpan preferensi tema pengguna di localStorage
+            localStorage.setItem('theme', 'dark');
         }
     });
 });
-              // Handle klik tombol "Route"
               eventTableBody.addEventListener('click', function(event) {
                 if (event.target.classList.contains('route-btn')) {
                     const origin = event.target.getAttribute('data-origin');
-                    // Dapatkan lokasi pengguna
                     if (navigator.geolocation) {
                         navigator.geolocation.getCurrentPosition(position => {
                             const userLocation = `${position.coords.latitude},${position.coords.longitude}`;
@@ -2035,7 +2136,6 @@
                     }
                 }
             });
-         // Set tema berdasarkan preferensi yang disimpan di localStorage saat halaman dimuat
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark') {
         document.body.classList.add('dark-theme');
@@ -2044,20 +2144,15 @@
     }
 });
         
-        
-        
-            // Fungsi untuk mendapatkan tanggal hari ini dalam format yang sesuai dengan data
         function getTodayDate() {
             const today = new Date();
             return today.toLocaleDateString('en-GB', { year: 'numeric', month: '2-digit', day: '2-digit' });
         }
         
-        // Fungsi untuk menampilkan hanya event yang belum lewat
-        function filterUpcomingEvents(events) {
-            const today = getTodayDate();
-            return events.filter(event => event['Tanggal'] >= today);
-        }
-        
+document.addEventListener('DOMContentLoaded', function () {
+    const todayEvents = filterUpcomingEvents(events); 
+    displayEvents(todayEvents);
+}); 
            
         fetchDataFromAPI();
             </script>
@@ -2072,6 +2167,33 @@
   padding: 0;
   font-family: Arial, sans-serif;
 }
+
+#indicator-container {
+    margin-top: 20px;
+}
+
+.indicator {
+    display: inline-block;
+    padding: 5px 10px;
+    color: white;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+
+.glow-today {
+    box-shadow: 0 0 25px rgba(255, 255, 0, 0.6); /* Glow kuning */
+}
+
+.glow-next-week {
+    box-shadow: 0 0 25px rgba(38, 0, 255, 0.6); /* Glow biru aqua */
+}
+
+.glow-next-month {
+    box-shadow: 0 0 25px rgb(255, 1, 255); /* Glow ungu */
+}
+
+
 
 .result-container {
   text-align: left; /* Mengatur posisi teks kiri kanan */
@@ -2103,6 +2225,32 @@
 .text-pink:hover {
   color: #ff00ff; /* Warna teks pink saat dihover */
 }
+
+/* Mode Terang (default) */
+body[data-theme="light"] {
+    background-color: #fff;
+    color: #000;
+}
+
+body[data-theme="light"] .navbar,
+body[data-theme="light"] .nav-link {
+    background-color: #e3e3e3;
+    color: #000;
+}
+
+/* Mode Gelap */
+body[data-theme="dark"] {
+    background-color: #333;
+    color: #fff;
+}
+
+body[data-theme="dark"] .navbar,
+body[data-theme="dark"] .nav-link {
+    background-color: #444;
+    color: #fff;
+}
+
+
 
 /* Gaya untuk tema gelap */
 .dark-theme {
