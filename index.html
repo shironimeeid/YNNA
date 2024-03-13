@@ -1954,7 +1954,7 @@ function isEventUpcoming(eventDateString) {
 
         // Template HTML untuk event
         eventElement.innerHTML = `
-        <img src="https://telegra.ph/file/68b1dcc94b019bb05701a.jpg" alt="Event Image" style="width:0%; height:auto;">
+            <img src="https://telegra.ph/file/68b1dcc94b019bb05701a.jpg" alt="Event Image" style="width:100%; height:auto;">
             <h2>${event.E ? event.E : 'Tidak tersedia'}</h2>
             <p>Date: ${event.A ? event.A : 'Tidak tersedia'}</p>
             <p>Time: ${event.B ? event.B : 'Tidak tersedia'}</p>
@@ -1969,11 +1969,20 @@ function isEventUpcoming(eventDateString) {
         routeButton.className = 'route-btn btn btn-primary';
         routeButton.textContent = 'Route';
         routeButton.addEventListener('click', () => {
-            // Asumsikan event.C adalah lokasi acara yang valid
-            const origin = 'Lokasi pengguna'; // Placeholder, asumsikan ini diperoleh dari geolocation
-            const destination = event.C; // Menggunakan lokasi acara
-            const mapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(destination)}`;
-            window.open(mapsUrl, '_blank');
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(position => {
+                    const userLocation = `${position.coords.latitude},${position.coords.longitude}`;
+                    const destination = event.C; // Menggunakan lokasi acara
+                    const mapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(userLocation)}&destination=${encodeURIComponent(destination)}`;
+                    window.open(mapsUrl, '_blank');
+                }, error => {
+                    console.error('Error getting user location:', error);
+                    alert('Maaf, tidak dapat menemukan lokasi Anda. Pastikan Anda memberikan izin untuk akses lokasi.');
+                });
+            } else {
+                console.error('Geolocation is not supported by this browser.');
+                alert('Maaf, peramban ini tidak mendukung geolokasi.');
+            }
         });
         eventElement.appendChild(routeButton);
 
@@ -1992,9 +2001,9 @@ function isEventUpcoming(eventDateString) {
 
     if (upcomingEvents.length === 0) {
         eventsContainer.innerHTML = `
-            <div style="text-align: center;"> <!-- Tambahkan style untuk penyesuaian tampilan -->
+            <div style="text-align: center;">
                 <p>Tidak ada event yang tersedia.</p>
-                <img src="menhera.gif" alt="No Events Available" style="width: 300px; height: auto;"> <!-- Sesuaikan lokasi file GIF -->
+                <img src="menhera.gif" alt="No Events Available" style="width: 300px; height: auto;">
             </div>
         `;
     }
