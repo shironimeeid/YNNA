@@ -71,23 +71,33 @@ document.addEventListener("DOMContentLoaded", function() {
         audio.play();
     }
     
-    function displayEvents(events) {
+     function displayEvents(events) {
         const eventsContainer = document.getElementById('events-container');
-        eventsContainer.innerHTML = ''; // Clear previous results
+        eventsContainer.innerHTML = ''; // Bersihkan hasil sebelumnya
+    
+        if (events.length === 0) {
+            // Tampilkan GIF ketika tidak ada event yang tersedia
+            eventsContainer.innerHTML = `
+                <div style="text-align: center;">
+                    <p>Tidak ada event yang tersedia.</p>
+                    <img src="menhera.gif" alt="No Events Available" style="width: 300px; height: auto;">
+                </div>
+            `;
+            return; // Hentikan eksekusi fungsi lebih lanjut jika tidak ada event
+        }
     
         events.forEach(event => {
             const eventElement = document.createElement('div');
             eventElement.classList.add('event');
             eventElement.innerHTML = `
-            <h2>${event['Nama Acara (Link acara klik)'] || 'Tidak Tersedia'}</h2>
-            <p>Date: ${event['Tanggal'] || 'Tidak Tersedia'}</p>
-            <p>Time: ${event['Jam'] || 'Tidak Tersedia'}</p>
-            <p>Location: ${event['Lokasi (baca keterangan lebih lanjut di Facebook Page)'] || 'Tidak Tersedia'}</p>
-            <p>Area: ${event['Area'] || 'Tidak Tersedia'}</p>
-            <p>Last Update: ${event['Last Update'] || 'Tidak Tersedia'}</p>
-            <a href="${event['Link Acara'] || '#'}" target="_blank" class="btn btn-warning">Event Link</a>
-            `;
-    
+                <h2>${event.E ? event.E : 'Tidak tersedia'}</h2>
+                <p>Date: ${event.A ? event.A : 'Tidak tersedia'}</p>
+                <p>Time: ${event.B ? event.B : 'Tidak tersedia'}</p>
+                <p>Location: ${event.C ? event.C : 'Tidak tersedia'}</p>
+                <p>Area: ${event.D ? event.D : 'Tidak tersedia'}</p>
+                <p>Last Update: ${event.F ? event.F : 'Tidak tersedia'}</p>
+                <a href="${event.G ? event.G : '#'}" target="_blank" class="btn btn-warning">${event.G ? 'Event Link' : 'Tidak tersedia'}</a>
+            `;   
             // Tambahkan tombol "Route"
             const routeButton = document.createElement('button');
             routeButton.className = 'route-btn btn btn-primary';
