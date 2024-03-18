@@ -14,6 +14,7 @@ function getTodayDateString() {
 
 async function fetchEventsForToday() {
     const todayDateStr = getTodayDateString();
+   // const apiUrl = 'https://jfid-event-api.vercel.app/api/events';
     const apiUrl = 'https://sheet.best/api/sheets/8b568522-9419-43ed-94a6-b8bfc42ed9ed';
     try {
         const response = await fetch(apiUrl);
@@ -26,11 +27,22 @@ async function fetchEventsForToday() {
                 'Lokasi (baca keterangan lebih lanjut di Facebook Page)',
                 'Area'
             ]
-        };
+        };  
+
+         /* const fuseOptions = {
+            includeScore: true,
+            keys: [
+                'E', // Asumsi 'E' adalah kunci untuk nama event
+                'D'  // Asumsi 'D' adalah kunci untuk area
+            ]
+        }; */
+
         fuse = new Fuse(events, fuseOptions);
+
+        
         const todayEvents = events.filter(event => {
-            // Anda mungkin perlu menyesuaikan format tanggal di sini untuk cocok dengan 'todayDateStr'
-            const eventDate = new Date(event.Tanggal).toLocaleDateString('en-GB', {
+            // Langsung menggunakan properti "A" karena sudah dalam format yang diharapkan
+            const eventDate = new Date(event.A).toLocaleDateString('en-GB', {
                 day: '2-digit',
                 month: 'short',
                 year: 'numeric',
@@ -70,8 +82,11 @@ document.addEventListener("DOMContentLoaded", function() {
         var audio = document.getElementById("animeSound");
         audio.play();
     }
-    
-     function displayEvents(events) {
+
+
+
+
+    function displayEvents(events) {
         const eventsContainer = document.getElementById('events-container');
         eventsContainer.innerHTML = ''; // Bersihkan hasil sebelumnya
     
@@ -89,7 +104,7 @@ document.addEventListener("DOMContentLoaded", function() {
         events.forEach(event => {
             const eventElement = document.createElement('div');
             eventElement.classList.add('event');
-            eventElement.innerHTML = `
+            /* eventElement.innerHTML = `
                 <h2>${event.E ? event.E : 'Tidak tersedia'}</h2>
                 <p>Date: ${event.A ? event.A : 'Tidak tersedia'}</p>
                 <p>Time: ${event.B ? event.B : 'Tidak tersedia'}</p>
@@ -97,7 +112,17 @@ document.addEventListener("DOMContentLoaded", function() {
                 <p>Area: ${event.D ? event.D : 'Tidak tersedia'}</p>
                 <p>Last Update: ${event.F ? event.F : 'Tidak tersedia'}</p>
                 <a href="${event.G ? event.G : '#'}" target="_blank" class="btn btn-warning">${event.G ? 'Event Link' : 'Tidak tersedia'}</a>
+            `;       */
+             eventElement.innerHTML = `
+            <h2>${event['Nama Acara (Link acara klik)'] || 'Tidak Tersedia'}</h2>
+            <p>Date: ${event['Tanggal'] || 'Tidak Tersedia'}</p>
+            <p>Time: ${event['Jam'] || 'Tidak Tersedia'}</p>
+            <p>Location: ${event['Lokasi (baca keterangan lebih lanjut di Facebook Page)'] || 'Tidak Tersedia'}</p>
+            <p>Area: ${event['Area'] || 'Tidak Tersedia'}</p>
+            <p>Last Update: ${event['Last Update'] || 'Tidak Tersedia'}</p>
+            <a href="${event['Link Acara'] || '#'}" target="_blank" class="btn btn-warning">Event Link</a>
             `;   
+    
             // Tambahkan tombol "Route"
             const routeButton = document.createElement('button');
             routeButton.className = 'route-btn btn btn-primary';
@@ -174,8 +199,10 @@ document.addEventListener("DOMContentLoaded", function() {
     const fuseOptions = {
         includeScore: true,
         keys: [
-            'Nama Acara (Link acara klik)', // Nama event
+          'Nama Acara (Link acara klik)', // Nama event
             'Area' // Nama area
+          // 'E', // Asumsi 'E' adalah kunci untuk nama event
+          // 'D'  // Asumsi 'D' adalah kunci untuk area
         ]
     };
     
@@ -184,13 +211,14 @@ document.addEventListener("DOMContentLoaded", function() {
         const searchResults = fuse.search(query);
         // Filter hasil untuk memastikan hanya yang cocok dengan query
         const filteredResults = searchResults.filter(result => {
-            const eventName = result.item['Nama Acara (Link acara klik)'].toLowerCase();
-            const eventArea = result.item['Area'].toLowerCase();
-            const eventLocation = result.item['Lokasi (baca keterangan lebih lanjut di Facebook Page)'].toLowerCase();
+            const eventName = result.item.E.toLowerCase(); // Menggunakan 'E' untuk nama acara
+            const eventArea = result.item.D.toLowerCase(); // Menggunakan 'D' untuk area
+            const eventLocation = result.item.C.toLowerCase(); // Menggunakan 'C' untuk lokasi
             return eventName.includes(query.toLowerCase()) || eventArea.includes(query.toLowerCase()) || eventLocation.includes(query.toLowerCase());
         });
         return filteredResults.map(result => result.item);
     }
+    
     
     
 
