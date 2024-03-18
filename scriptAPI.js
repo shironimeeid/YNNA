@@ -14,7 +14,7 @@ function getTodayDateString() {
 
 async function fetchEventsForToday() {
     const todayDateStr = getTodayDateString();
-    const apiUrl = 'https://sheet.best/api/sheets/07db4fd7-1649-4d61-989c-da6ec069a256';
+    const apiUrl = 'https://sheet.best/api/sheets/8b568522-9419-43ed-94a6-b8bfc42ed9ed';
     try {
         const response = await fetch(apiUrl);
         const events = await response.json();
