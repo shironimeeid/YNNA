@@ -109,16 +109,6 @@ body, html {
   text-align: center;
 }
 
-#search-container {
-  margin: 20px 0;
-}
-
-#search-input {
-  padding: 10px;
-  margin-right: 5px;
-  width: 100px;
-  border: 1px solid #ccc;
-}
 
 #search-button {
   padding: 10px;
@@ -573,3 +563,17 @@ nav {
     transition: all 0.3s linear
 }
 
+#search-input {
+  border-radius: 20px; /* Creates rounded corners */
+  padding: 10px 20px; /* Adds space inside the input, making it taller and giving more space on the sides */
+  border: 2px solid #5a4fcf; /* Gives a solid border with a color */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow for depth */
+  font-size: 16px; /* Adjusts the font size for better readability */
+  outline: none; /* Removes the default focus outline */
+  transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transition for interactions */
+}
+
+#search-input:focus {
+  border-color: #303F9F; /* Changes the border color on focus for visual feedback */
+  box-shadow: 0 0 8px rgba(48, 63, 159, 0.4); /* Increases the shadow on focus for emphasis */
+}
