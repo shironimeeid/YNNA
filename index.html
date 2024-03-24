@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YNNA COMMUNITY</title>
     <link rel="icon" href="/file/logo.jpg" type="image/jpg">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body, html {
@@ -48,12 +49,72 @@
 </head>
 <body>
     <div class="maintenance-message">
-      <h1>Mohon Maaf Atas Ketidaknyamanan Ini</h1>
-    <p>Saat ini, saya sedang melakukan pemeliharaan pada situs ini dan menghadapi masalah server (500). Saya sedang berusaha keras untuk menyelesaikan masalah ini secepat mungkin. Terima kasih atas kesabaran Anda. Silakan cek kembali nanti.</p>
-    <p>Developer: <a href="https://instagram.com/renn.ezzcos" target="_blank">@renn.ezzcos</a></p>
-</div>
-</body>
-</html>
+        <h1>Mohon Maaf Atas Ketidaknyamanan Ini</h1>
+        <p>Saat ini, saya sedang melakukan pemeliharaan pada situs ini dan menghadapi masalah server (500). Saya sedang berusaha keras untuk menyelesaikan masalah ini secepat mungkin. Terima kasih atas kesabaran Anda. Silakan cek kembali nanti.</p>
+        <p>Developer: <a href="https://instagram.com/renn.ezzcos" target="_blank">@renn.ezzcos</a></p>
+
+
+        <div class="guess-who">
+            <h2>Games Tebak Siapa Aku</h2>
+            <p id="question"></p>
+            <input type="text" id="answerInput" placeholder="Masukkan jawabanmu...">
+            <button type="button" class="btn btn-primary" onclick="loadQuestion()">Muat Soal</button>
+            <button type="button" class="btn btn-success" onclick="checkAnswer()">Jawab</button>            
+            <p id="answerResult"></p>
+
+    </div>
+
+
+    <script>
+        let currentQuestion = {};
+
+        function loadQuestion() {
+            fetch('https://raw.githubusercontent.com/ramadhankukuh/database/master/src/games/siapakahaku.json')
+                .then(response => response.json())
+                .then(data => {
+                    const randomIndex = Math.floor(Math.random() * data.length);
+                    currentQuestion = data[randomIndex];
+                    document.getElementById('question').textContent = currentQuestion.soal;
+                    document.getElementById('answerInput').value = ''; // Bersihkan input
+                    document.getElementById('answerResult').textContent = ''; // Bersihkan hasil sebelumnya
+                })
+        .catch(error => {
+            console.error('Error fetching the question:', error);
+            document.getElementById('question').textContent = 'Gagal memuat soal.';
+        });
+}
+
+function checkAnswer() {
+    let userAnswer = document.getElementById('answerInput').value;
+    let answerResult = document.getElementById('answerResult');
+    if (userAnswer.toLowerCase() === currentQuestion.jawaban.toLowerCase()) {
+        answerResult.textContent = "Benar!";
+        answerResult.style.color = "green";
+    } else {
+        answerResult.textContent = "Salah, coba lagi.";
+        answerResult.style.color = "red";
+    }
+}
+</script>
+<style>
+
+.guess-game {
+    text-align: center;
+    margin-top: 40px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+}
+
+.guess-game h2, .guess-game p {
+    color: #ffffff;
+}
+
+.guess-game input, .guess-game button {
+    margin: 10px;
+    padding: 5px;
+}
+</style>
 
 
 
