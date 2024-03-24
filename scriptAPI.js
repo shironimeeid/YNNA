@@ -4,6 +4,35 @@ let events = [];
 let fuse;
 let allEvents = []; // Variabel untuk menyimpan semua event
 
+
+//motivasi
+function loadMotivation() {
+    fetch('https://raw.githubusercontent.com/ramadhankukuh/database/master/src/kata-kata/motivasi.json')
+        .then(response => response.json())
+        .then(motivations => {
+            const randomIndex = Math.floor(Math.random() * motivations.length);
+            document.getElementById('motivationText').textContent = motivations[randomIndex];
+        })
+        .catch(error => {
+            console.error('Error fetching motivation:', error);
+            document.getElementById('motivationText').textContent = 'Gagal memuat kata-kata motivasi.';
+        });
+}
+document.addEventListener('DOMContentLoaded', loadMotivation);
+
+
+///Ganti Tema Baru
+window.onload = function () {
+    twemoji.parse(document.body, { folder: 'svg', ext: '.svg' });
+    
+    const themeToggleButton = document.getElementById('toggleTheme');
+    themeToggleButton.addEventListener('click', function() {
+        document.body.classList.toggle('dark-theme');
+    });
+};
+
+
+
 async function fetchEventsForToday() {
     const todayDateStr = getTodayDateString();
     const apiUrl = 'https://sheet.best/api/sheets/8b568522-9419-43ed-94a6-b8bfc42ed9ed';
