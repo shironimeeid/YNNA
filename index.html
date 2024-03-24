@@ -1,4 +1,4 @@
-<!<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -12,32 +12,46 @@
             height: 100%;
             margin: 0;
             font-family: 'Poppins', sans-serif;
-            background-color: #081c24; /* Warna latar belakang gelap */
-            color: #ffffff; /* Warna teks putih untuk kontras yang baik */
+            background-color: #081c24; /* Dark background color */
+            color: #ffffff; /* White text color for good contrast */
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-
-        .container {
             text-align: center;
         }
 
         .maintenance-message h1 {
-            color: #e9c46a; /* Warna kuning keemasan untuk judul */
+            color: #e9c46a; /* Golden yellow color for the title */
             margin-bottom: 20px;
         }
 
         .maintenance-message p {
-            color: #f4a261; /* Warna oranye muda untuk teks */
-            font-weight: 400; /* Ketebalan font normal */
-            font-size: 18px; /* Ukuran font yang lebih besar untuk keterbacaan */
-            line-height: 1.6; /* Spasi baris untuk kenyamanan membaca */
+            color: #f4a261; /* Light orange color for text */
+            font-weight: 400; /* Normal font weight */
+            font-size: 18px; /* Larger font size for readability */
+            line-height: 1.6; /* Line spacing for reading comfort */
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .maintenance-message h1, .maintenance-message p, .guess-who h2, .guess-who p, .motivation h2, .motivation p {
+                font-size: 16px; /* Smaller font size for mobile devices */
+                line-height: 1.4; /* Adjusted line spacing for mobile devices */
+            }
+            
+            .maintenance-message p, .guess-who p, .motivation p {
+                margin: 10px 0; /* Ensuring proper spacing between elements */
+            }
+
+            input[type="text"], button {
+                width: 90%; /* Making inputs and buttons span most of the screen width */
+                margin: 10px auto; /* Centering inputs and buttons horizontally */
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container"> <!-- Container untuk mengelompokkan konten -->
+    <div class="container"> <!-- Container to group content -->
         <div class="maintenance-message">
             <h1>Mohon Maaf Atas Ketidaknyamanan Ini</h1>
             <p>Saat ini, saya sedang melakukan pemeliharaan pada situs ini dan menghadapi masalah server (500). Saya sedang berusaha keras untuk menyelesaikan masalah ini secepat mungkin. Terima kasih atas kesabaran Anda. Silakan cek kembali nanti.</p>
@@ -60,6 +74,7 @@
     </div>
 </body>
 </html>
+
 
 
 
