@@ -2,24 +2,26 @@
 
 let events = [];
 let fuse;
-function getTodayDateString() {
-    const today = new Date();
-    return today.toLocaleDateString('en-GB', {
-        day: '2-digit',
-        month: 'short',
-        year: 'numeric',
-        timeZone: 'Asia/Jakarta'
-    }).replace(/ /g, ' ');
-}
+let allEvents = []; // Variabel untuk menyimpan semua event
 
 async function fetchEventsForToday() {
     const todayDateStr = getTodayDateString();
-   // const apiUrl = 'https://jfid-event-api.vercel.app/api/events';
     const apiUrl = 'https://sheet.best/api/sheets/8b568522-9419-43ed-94a6-b8bfc42ed9ed';
     try {
         const response = await fetch(apiUrl);
-        const events = await response.json();
-        
+        allEvents = await response.json(); // Simpan semua event ke variabel global
+
+        const todayEvents = allEvents.filter(event => {
+            const eventDateStr = new Date(event.Tanggal).toLocaleDateString('en-GB', {
+                day: '2-digit',
+                month: 'short',
+                year: 'numeric',
+                timeZone: 'Asia/Jakarta'
+            }).replace(/ /g, ' ');
+            return eventDateStr === todayDateStr;
+        });
+
+        // Inisialisasi Fuse dengan semua event
         const fuseOptions = {
             includeScore: true,
             keys: [
@@ -27,30 +29,10 @@ async function fetchEventsForToday() {
                 'Lokasi (baca keterangan lebih lanjut di Facebook Page)',
                 'Area'
             ]
-        };  
-
-         /* const fuseOptions = {
-            includeScore: true,
-            keys: [
-                'E', // Asumsi 'E' adalah kunci untuk nama event
-                'D'  // Asumsi 'D' adalah kunci untuk area
-            ]
-        }; */
-
-        fuse = new Fuse(events, fuseOptions);
-
+        };
+        fuse = new Fuse(allEvents, fuseOptions); // Gunakan allEvents di sini
         
-        const todayEvents = events.filter(event => {
-            // Langsung menggunakan properti "A" karena sudah dalam format yang diharapkan
-            const eventDate = new Date(event.A).toLocaleDateString('en-GB', {
-                day: '2-digit',
-                month: 'short',
-                year: 'numeric',
-                timeZone: 'Asia/Jakarta'
-            }).replace(/ /g, ' ');
-            return eventDate === todayDateStr;
-        });
-        displayEvents(todayEvents);
+        displayEvents(todayEvents); // Tetap tampilkan hanya event hari ini
     } catch (error) {
         console.error('Error fetching events:', error);
     }
