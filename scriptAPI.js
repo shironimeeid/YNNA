@@ -158,8 +158,19 @@ document.addEventListener("DOMContentLoaded", function() {
     
             eventsContainer.appendChild(eventElement);
 
+            const krlButton = document.createElement('button');
+krlButton.className = 'krl-btn btn btn-danger'; // Anda bisa menyesuaikan className sesuai kebutuhan
+krlButton.textContent = 'KRL';
+krlButton.addEventListener('click', () => {
+    window.location.href = 'keret.html'; // Redirect ke keret.html
+});
+eventElement.appendChild(krlButton);
+
+eventsContainer.appendChild(eventElement);
+});
+
               /// INI AI GENERATE GPT-V4
-        const aiButton = document.createElement('button');
+      /*  const aiButton = document.createElement('button');
         aiButton.className = 'ai-btn btn btn-success';
         aiButton.textContent = 'AI-Route';
         aiButton.addEventListener('click', () => {
@@ -174,7 +185,7 @@ document.addEventListener("DOMContentLoaded", function() {
         eventElement.appendChild(aiButton);
         eventsContainer.appendChild(eventElement);
         
-        });
+        }); */
     
         if (events.length === 0) {
             eventsContainer.innerHTML = '<p>Tidak ada event yang tersedia.</p>';
