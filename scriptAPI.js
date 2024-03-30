@@ -1,3 +1,25 @@
+document.addEventListener('DOMContentLoaded', function() {
+    const savedTheme = localStorage.getItem('theme');
+    const body = document.body;
+
+    // Memeriksa tema yang tersimpan dan menerapkannya
+    if (savedTheme === 'dark') {
+        body.classList.add('dark-theme');
+    } else {
+        body.classList.remove('dark-theme');
+    }
+
+    // Event listener untuk tombol ganti tema
+    document.getElementById('toggleTheme').addEventListener('click', () => {
+        if (body.classList.contains('dark-theme')) {
+            body.classList.remove('dark-theme');
+            localStorage.setItem('theme', 'light');
+        } else {
+            body.classList.add('dark-theme');
+            localStorage.setItem('theme', 'dark');
+        }
+    });
+
 
 
 let events = [];
@@ -131,7 +153,7 @@ document.addEventListener("DOMContentLoaded", function() {
             <p>Location: ${event['Lokasi (baca keterangan lebih lanjut di Facebook Page)'] || 'Tidak Tersedia'}</p>
             <p>Area: ${event['Area'] || 'Tidak Tersedia'}</p>
             <p>Last Update: ${event['Last Update'] || 'Tidak Tersedia'}</p>
-            <a href="${event.G ? event.G : '#'}" target="_blank" class="btn btn-warning">${event.G ? ' <i class="fab fa-usb"></i> Event Link' : 'Tidak tersedia'}</a>
+            <a href="${event['Link Acara'] || '#'}" target="_blank" class="btn btn-warning"> <i class="fab fa-usb"></i> Event Link</a>
             `;   
     
             // Tambahkan tombol "Route"
@@ -337,29 +359,7 @@ setTimeout(function() {
 
 
 
-///// khusus dark time
-document.addEventListener('DOMContentLoaded', function() {
-const savedTheme = localStorage.getItem('theme');
-const body = document.body;
 
-// Periksa apakah pengguna sebelumnya memilih tema gelap
-if (savedTheme === 'dark') {
-body.classList.add('dark-theme');
-} else {
-body.classList.remove('dark-theme');
-}
-
-// Tambahkan event listener untuk tombol toggle tema
-document.getElementById('toggleTheme').addEventListener('click', () => {
-// Periksa apakah tema saat ini adalah tema gelap atau terang, lalu ubah sesuai dengan itu
-if (body.classList.contains('dark-theme')) {
-    body.classList.remove('dark-theme');
-    localStorage.setItem('theme', 'light'); // Simpan preferensi tema pengguna di localStorage
-} else {
-    body.classList.add('dark-theme');
-    localStorage.setItem('theme', 'dark'); // Simpan preferensi tema pengguna di localStorage
-}
-});
 
 
 });
