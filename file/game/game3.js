@@ -31,6 +31,13 @@ function getRandomQuestionIndex() {
     return Math.floor(Math.random() * questions.length);
 }
 
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]]; // swap elements
+    }
+}
+
 function fetchQuestions() {
     fetch('https://raw.githubusercontent.com/ramadhankukuh/database/master/src/games/family100.json')
         .then(response => {
@@ -41,8 +48,9 @@ function fetchQuestions() {
         })
         .then(data => {
             questions = data;
+            shuffleArray(questions); // Mengacak urutan pertanyaan
             if (questions.length > 0) {
-                currentQuestionIndex = getRandomQuestionIndex();
+                currentQuestionIndex = 0; // Mulai dari pertanyaan pertama setelah diacak
                 displayQuestion(); // Tampilkan pertanyaan pertama
             } else {
                 throw new Error('No data found');
@@ -53,6 +61,7 @@ function fetchQuestions() {
             document.getElementById('question').textContent = 'Gagal memuat soal.';
         });
 }
+
 
 function displayQuestion() {
     const questionElement = document.getElementById('question');

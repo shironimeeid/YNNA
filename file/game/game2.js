@@ -34,7 +34,12 @@ function getRandomQuestionIndex() {
 }
 
 
-
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]]; // swap elements
+    }
+}
 
 function fetchQuestions() {
     fetch('https://raw.githubusercontent.com/ramadhankukuh/database/master/src/games/tebakkalimat.json')
@@ -46,8 +51,10 @@ function fetchQuestions() {
         })
         .then(data => {
             questions = data;
+            shuffleArray(questions); // Mengacak urutan pertanyaan
             if (questions.length > 0) {
-                displayQuestion(currentQuestionIndex); // Tampilkan pertanyaan pertama
+                currentQuestionIndex = 0; // Mulai dari pertanyaan pertama setelah diacak
+                displayQuestion(); // Tampilkan pertanyaan pertama
             } else {
                 throw new Error('No data found');
             }
