@@ -131,38 +131,42 @@ document.addEventListener("DOMContentLoaded", function() {
             <p>Location: ${event['Lokasi (baca keterangan lebih lanjut di Facebook Page)'] || 'Tidak Tersedia'}</p>
             <p>Area: ${event['Area'] || 'Tidak Tersedia'}</p>
             <p>Last Update: ${event['Last Update'] || 'Tidak Tersedia'}</p>
-            <a href="${event['Link Acara'] || '#'}" target="_blank" class="btn btn-warning">Event Link</a>
+            <a href="${event.G ? event.G : '#'}" target="_blank" class="btn btn-warning">${event.G ? ' <i class="fab fa-usb"></i> Event Link' : 'Tidak tersedia'}</a>
             `;   
     
             // Tambahkan tombol "Route"
-            const routeButton = document.createElement('button');
-            routeButton.className = 'route-btn btn btn-primary';
-            routeButton.textContent = 'Route';
-            routeButton.addEventListener('click', () => {
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(position => {
-                        const userLocation = `${position.coords.latitude},${position.coords.longitude}`;
-                        const destination = event['Lokasi (baca keterangan lebih lanjut di Facebook Page)']; // Menggunakan lokasi acara
-                        const mapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(userLocation)}&destination=${encodeURIComponent(destination)}`;
-                        window.open(mapsUrl, '_blank');
-                    }, error => {
-                        console.error('Error getting user location:', error);
-                        alert('Maaf, tidak dapat menemukan lokasi Anda. Pastikan Anda memberikan izin untuk akses lokasi.');
-                    });
-                } else {
-                    console.error('Geolocation is not supported by this browser.');
-                    alert('Maaf, peramban ini tidak mendukung geolokasi.');
-                }
-            });
-            eventElement.appendChild(routeButton);
-    
-            eventsContainer.appendChild(eventElement);
+               // Tambahkan tombol "Route" dengan ikon dan teks
+const routeButton = document.createElement('button');
+routeButton.className = 'route-btn btn btn-primary'; // Tetapkan kelas untuk styling
+routeButton.innerHTML = '<i class="fab fa-periscope"></i> Route'; // Tambahkan ikon dan teks
+routeButton.addEventListener('click', () => {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(position => {
+            const userLocation = `${position.coords.latitude},${position.coords.longitude}`;
+            // Pastikan nilai 'destination' diambil dari data event yang benar
+            const destination = event['Lokasi (baca keterangan lebih lanjut di Facebook Page)']; // Menggunakan lokasi acara
+            const mapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(userLocation)}&destination=${encodeURIComponent(destination)}`;
+            window.open(mapsUrl, '_blank');
+        }, error => {
+            console.error('Error getting user location:', error);
+            alert('Maaf, tidak dapat menemukan lokasi Anda. Pastikan Anda memberikan izin untuk akses lokasi.');
+        });
+    } else {
+        console.error('Geolocation is not supported by this browser.');
+        alert('Maaf, peramban ini tidak mendukung geolokasi.');
+    }
+});
+eventElement.appendChild(routeButton);
 
-            const krlButton = document.createElement('button');
-krlButton.className = 'krl-btn btn btn-danger'; // Anda bisa menyesuaikan className sesuai kebutuhan
-krlButton.textContent = 'KRL';
+eventsContainer.appendChild(eventElement);
+
+
+
+const krlButton = document.createElement('button');
+krlButton.className = 'krl-btn btn btn-danger'; 
+krlButton.innerHTML = '<i class="fab fa-usps"></i> KRL';
 krlButton.addEventListener('click', () => {
-    window.location.href = 'keret.html'; // Redirect ke keret.html
+    window.location.href = 'keret.html'; 
 });
 eventElement.appendChild(krlButton);
 
