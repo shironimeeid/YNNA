@@ -31,7 +31,7 @@ let allEvents = []; // Variabel untuk menyimpan semua event
 
 //motivasi
 function loadMotivation() {
-    fetch('https://raw.githubusercontent.com/ramadhankukuh/database/master/src/kata-kata/motivasi.json')
+    fetch('https://raw.githubusercontent.com/ramadhankukuh/database/master/src/kata-kata/bucin.json')
         .then(response => response.json())
         .then(motivations => {
             const randomIndex = Math.floor(Math.random() * motivations.length);
@@ -39,7 +39,7 @@ function loadMotivation() {
         })
         .catch(error => {
             console.error('Error fetching motivation:', error);
-            document.getElementById('motivationText').textContent = 'Gagal memuat kata-kata motivasi.';
+            document.getElementById('motivationText').textContent = 'Gagal memuat kata-kata.';
         });
 }
 document.addEventListener('DOMContentLoaded', loadMotivation);
