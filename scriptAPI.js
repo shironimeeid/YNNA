@@ -1,24 +1,26 @@
 document.addEventListener('DOMContentLoaded', function() {
+    loadMotivation();
+    fetchEventsForToday();
+    setInterval(updateTime, 1000);
+    applySavedTheme();
+    document.getElementById('toggleTheme').addEventListener('click', toggleTheme);
+});
+
+function applySavedTheme() {
     const savedTheme = localStorage.getItem('theme');
-    const body = document.body;
-
-    // Memeriksa tema yang tersimpan dan menerapkannya
     if (savedTheme === 'dark') {
-        body.classList.add('dark-theme');
+        document.body.classList.add('dark-theme');
     } else {
-        body.classList.remove('dark-theme');
+        document.body.classList.remove('dark-theme');
     }
+}
 
-    // Event listener untuk tombol ganti tema
-    document.getElementById('toggleTheme').addEventListener('click', () => {
-        if (body.classList.contains('dark-theme')) {
-            body.classList.remove('dark-theme');
-            localStorage.setItem('theme', 'light');
-        } else {
-            body.classList.add('dark-theme');
-            localStorage.setItem('theme', 'dark');
-        }
-    });
+function toggleTheme() {
+    const body = document.body;
+    body.classList.toggle('dark-theme');
+    const theme = body.classList.contains('dark-theme') ? 'dark' : 'light';
+    localStorage.setItem('theme', theme);
+}
 
 
 
@@ -359,7 +361,29 @@ setTimeout(function() {
 
 
 
+///// khusus dark time
+document.addEventListener('DOMContentLoaded', function() {
+const savedTheme = localStorage.getItem('theme');
+const body = document.body;
 
+// Periksa apakah pengguna sebelumnya memilih tema gelap
+if (savedTheme === 'dark') {
+body.classList.add('dark-theme');
+} else {
+body.classList.remove('dark-theme');
+}
+
+// Tambahkan event listener untuk tombol toggle tema
+document.getElementById('toggleTheme').addEventListener('click', () => {
+// Periksa apakah tema saat ini adalah tema gelap atau terang, lalu ubah sesuai dengan itu
+if (body.classList.contains('dark-theme')) {
+    body.classList.remove('dark-theme');
+    localStorage.setItem('theme', 'light'); // Simpan preferensi tema pengguna di localStorage
+} else {
+    body.classList.add('dark-theme');
+    localStorage.setItem('theme', 'dark'); // Simpan preferensi tema pengguna di localStorage
+}
+});
 
 
 });
