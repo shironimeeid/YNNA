@@ -218,15 +218,38 @@ body {
   transition: background-color 0.5s ease, color 0.5s ease;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
-@keyframes fadeOut {
-  from { opacity: 1; }
-  to { opacity: 0; }
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
+
+.slide-in-left {
+  animation: slideInLeft 0.5s forwards;
+}
+
+.slide-in-right {
+  animation: slideInRight 0.5s forwards;
+}
+
+
+
 
 /* Tambahkan properti CSS untuk membuat kotak notifikasi */
 #popupAlert {
@@ -577,3 +600,18 @@ nav {
   border-color: #303F9F; /* Changes the border color on focus for visual feedback */
   box-shadow: 0 0 8px rgba(48, 63, 159, 0.4); /* Increases the shadow on focus for emphasis */
 }
+
+
+/* Gaya default (Light Theme) */
+body {
+  background-color: #fff;
+  color: #000;
+}
+
+/* Gaya untuk Dark Theme */
+body.dark-theme {
+  background-color: #333;
+  color: #fff;
+}
+
+/* Anda bisa menambahkan gaya khusus lainnya untuk dark theme berdasarkan kebutuhan */
