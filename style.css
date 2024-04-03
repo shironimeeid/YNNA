@@ -131,44 +131,53 @@ body, html {
   background-color: #f9f9f9;
   border: 1px solid #ddd;
   background-image: url('https://telegra.ph/file/68b1dcc94b019bb05701a.jpg');
-  background-size: cover; /* Menyesuaikan ukuran gambar */
-  background-position: center; /* Posisi gambar di tengah kotak event */
-  background-repeat: no-repeat; /* Menghindari pengulangan gambar */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   padding: 15px;
   margin-bottom: 20px;
-  color: #ffffff; /* Warna teks default */
-  font-weight: bold; /* Membuat teks menjadi tebal */
-  border-radius: 5px; /* Menggunakan border-radius untuk membuat sudut kotak menjadi melengkung */
+  color: #ffffff;
+  font-weight: bold;
+  border-radius: 10px; /* Nilai ditingkatkan untuk sudut yang lebih melengkung */
   transition: transform 0.3s ease;
 }
 
 .event:hover {
-  transform: scale(1.1); /* Memperbesar elemen saat dihover */
+  transform: scale(1.1);
 }
 
 .event:active {
-  transform: scale(0.9); /* Memperkecil elemen saat ditekan */
+  transform: scale(0.9);
 }
-
 
 .light-theme .event {
-  background-image: url('https://telegra.ph/file/68b1dcc94b019bb05701a.jpg'); /* Gunakan gambar yang sama di mode terang */
-  background-color: rgba(255, 255, 255, 0.8); /* Warna latar belakang dengan opasitas rendah */
+  background-image: url('https://telegra.ph/file/68b1dcc94b019bb05701a.jpg');
+  background-color: rgba(255, 255, 255, 0.8);
   border-color: #ddd;
-  color: #000000; /* Warna teks di mode terang */
-  font-weight: bold; /* Membuat teks menjadi tebal */
+  color: #000000;
+  font-weight: bold;
 }
 
+.dark-theme .event {
+  background-image: url('https://telegra.ph/file/68b1dcc94b019bb05701a.jpg');
+  background-color: rgba(0, 0, 0, 0.6);
+  border-color: #000000;
+  color: #fff;
+  font-weight: bold;
+  box-shadow: 0 0 10px rgb(255, 0, 200); /* Efek glow dengan warna pink */
+  animation: rainbow-glow 5s infinite;
+}
 
 @keyframes rainbow-glow {
-  0% { box-shadow: 0 0 10px hsl(0, 100%, 50%); } /* Merah */
-  16.67% { box-shadow: 0 0 10px hsl(60, 100%, 50%); } /* Oranye */
-  33.33% { box-shadow: 0 0 10px hsl(120, 100%, 50%); } /* Kuning */
-  50% { box-shadow: 0 0 10px hsl(180, 100%, 50%); } /* Hijau */
-  66.67% { box-shadow: 0 0 10px hsl(240, 100%, 50%); } /* Cyan */
-  83.33% { box-shadow: 0 0 10px hsl(300, 100%, 50%); } /* Biru */
-  100% { box-shadow: 0 0 10px hsl(360, 100%, 50%); } /* Merah */
+  0% { box-shadow: 0 0 10px hsl(0, 100%, 50%); }
+  16.67% { box-shadow: 0 0 10px hsl(60, 100%, 50%); }
+  33.33% { box-shadow: 0 0 10px hsl(120, 100%, 50%); }
+  50% { box-shadow: 0 0 10px hsl(180, 100%, 50%); }
+  66.67% { box-shadow: 0 0 10px hsl(240, 100%, 50%); }
+  83.33% { box-shadow: 0 0 10px hsl(300, 100%, 50%); }
+  100% { box-shadow: 0 0 10px hsl(360, 100%, 50%); }
 }
+
 
 
 
