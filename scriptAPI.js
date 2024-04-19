@@ -45,7 +45,7 @@ window.onload = function () {
 
 async function fetchEventsForToday() {
     const todayDateStr = getTodayDateString();
-    const apiUrl = 'https://sheet.best/api/sheets/8b568522-9419-43ed-94a6-b8bfc42ed9ed';
+    const apiUrl = 'https://sheet.best/api/sheets/d02607a0-9fd3-4a9a-9806-54abbd49ff60';
     try {
         const response = await fetch(apiUrl);
         allEvents = await response.json();
