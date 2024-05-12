@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cuaca</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #areaInput {
+            padding: 10px;
+            margin-bottom: 10px;
+            width: 300px;
+        }
+        button {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        #weatherResult {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            width: 80%;
+            max-width: 600px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Informasi Cuaca</h1>
+    <input type="text" id="areaInput" placeholder="Masukkan Area">
+    <div style="display: flex;">
+        <button onclick="fetchWeather()">Cek Cuaca</button>
+        <button onclick="goBack()">Home</button>
+    </div>
+    <div id="weatherResult"></div>
+
+
+    <!--- SCRIPT.JS BY BIKIN PUSENGGG ANJINGGGG -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+    async function fetchWeather() {
+        const area = document.getElementById('areaInput').value;
+        if (!area) {
+            alert('Masukkan area terlebih dahulu!');
+            return;
+        }
+        try {
+            const response = await axios.get(
+                `https://api.openweathermap.org/data/2.5/weather?q=${area}&units=metric&appid=060a6bcfa19809c2cd4d97a212b19273`
+            );
+            const data = response.data;
+            let resultHTML = `<h2>Cuaca di ${area}</h2>`;
+            resultHTML += `<p>Cuaca: ${data.weather[0].main}</p>`;
+            resultHTML += `<p>Deskripsi: ${data.weather[0].description}</p>`;
+            resultHTML += `<p>Suhu Rata-rata: ${data.main.temp} °C</p>`;
+            resultHTML += `<p>Teraba Seperti: ${data.main.feels_like} °C</p>`;
+            resultHTML += `<p>Tekanan: ${data.main.pressure} hPa</p>`;
+            resultHTML += `<p>Kelembapan: ${data.main.humidity}%</p>`;
+            resultHTML += `<p>Kecepatan Angin: ${data.wind.speed} m/s</p>`;
+            resultHTML += `<p>Lintang: ${data.coord.lat}</p>`;
+            resultHTML += `<p>Bujur: ${data.coord.lon}</p>`;
+            resultHTML += `<p>Negara: ${data.sys.country}</p>`;
+
+            document.getElementById('weatherResult').innerHTML = resultHTML;
+        } catch (error) {
+            alert('Gagal mengambil data cuaca');
+        }
+    }
+
+    function loadAndFetchWeather() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const area = urlParams.get('area');
+        document.getElementById('areaInput').value = area;
+        fetchWeather();
+    }
+
+    function goBack() {
+        window.history.back();
+    }
+
+    document.addEventListener('DOMContentLoaded', loadAndFetchWeather);
+    </script>
+</body>
+</html>
