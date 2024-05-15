@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <meta charset="UTF-8">
     <title>Cuaca</title>
     <style>
@@ -42,6 +43,14 @@
     </style>
 </head>
 <body>
+    <div id="google_translate_element"></div>
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
     <h1>Informasi Cuaca</h1>
     <input type="text" id="areaInput" placeholder="Masukkan Area">
     <div style="display: flex;">
@@ -49,7 +58,6 @@
         <button onclick="goBack()">Home</button>
     </div>
     <div id="weatherResult"></div>
-
 
     <!--- SCRIPT.JS BY BIKIN PUSENGGG ANJINGGGG -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -79,7 +87,11 @@
 
             document.getElementById('weatherResult').innerHTML = resultHTML;
         } catch (error) {
-            alert('Gagal mengambil data cuaca');
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                text: 'Gagal mengambil data cuaca',
+            });
         }
     }
 
